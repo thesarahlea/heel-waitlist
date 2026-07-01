@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>heel. — join the waitlist</title>
+<meta name="description" content="Join the heel. waitlist for first access when we relaunch — launch events, promos, and news." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background-color: #6d6e3a;
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .dog-bg {
+    position: fixed;
+    bottom: -40px;
+    right: -60px;
+    width: 420px;
+    max-width: 60vw;
+    opacity: 0.16;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .logo {
+    width: 72px;
+    height: auto;
+    margin-bottom: 28px;
+  }
+
+  .kicker {
+    margin: 0 0 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  h1 {
+    margin: 0 0 18px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 1.1;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+  }
+
+  .sub {
+    margin: 0 0 36px;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.85);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  @media (min-width: 460px) {
+    form { flex-direction: row; }
+  }
+
+  input[type="email"] {
+    flex: 1;
+    width: 100%;
+    padding: 15px 18px;
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 999px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  input[type="email"]::placeholder { color: rgba(255,255,255,0.55); }
+  input[type="email"]:focus {
+    border-color: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.14);
+  }
+
+  button {
+    padding: 15px 28px;
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6d6e3a;
+    background: #ffffff;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  button:hover { transform: translateY(-1px); }
+  button:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+  .error {
+    margin: 14px 0 0;
+    font-size: 13px;
+    color: #ffd7d7;
+    display: none;
+  }
+
+  .footer-tag {
+    margin: 44px 0 0;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* Thank-you state */
+  #thankyou { display: none; }
+  #thankyou .sub { margin-bottom: 28px; }
+
+  .ig-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #ffffff;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.55);
+    border-radius: 999px;
+    transition: background 0.2s;
+  }
+  .ig-link:hover { background: rgba(255,255,255,0.12); }
+
+  #hidden_iframe { display: none; }
+</style>
+</head>
+<body>
+
+  <img class="dog-bg" src="assets/heel-dog-transparent.png" alt="" aria-hidden="true" />
+
+  <div class="card">
+    <img class="logo" src="assets/heel-logo-white.png" alt="heel." />
+
+    <!-- Signup state -->
+    <div id="signup">
+      <p class="kicker">the next chapter is almost here</p>
+      <h1>join the waitlist.</h1>
+      <p class="sub">Add your email for when we relaunch — you'll get first access to launch events, exclusive promos, and news, straight to your inbox.</p>
+
+      <form id="waitlistForm" action="PASTE_YOUR_APPS_SCRIPT_URL_HERE" method="POST" target="hidden_iframe">
+        <input type="email" name="email" id="emailInput" placeholder="your email address" required />
+        <button type="submit" id="submitBtn">Join</button>
+      </form>
+      <p class="error" id="errorMsg">Something went wrong — please try again.</p>
+    </div>
+
+    <!-- Thank-you state -->
+    <div id="thankyou">
+      <p class="kicker">you're on the list</p>
+      <h1>welcome to the pack.</h1>
+      <p class="sub">We'll email you the moment we relaunch. In the meantime, follow along for sneak peeks and updates.</p>
+      <a class="ig-link" href="https://www.instagram.com/liveheel" target="_blank" rel="noopener">follow @liveheel on instagram</a>
+    </div>
+
+    <p class="footer-tag">Because Pets Are People Too.</p>
+  </div>
+
+  <iframe name="hidden_iframe" id="hidden_iframe"></iframe>
+
+  <script>
+    var form = document.getElementById('waitlistForm');
+    var submitBtn = document.getElementById('submitBtn');
+    var errorMsg = document.getElementById('errorMsg');
+    var iframe = document.getElementById('hidden_iframe');
+    var submitted = false;
+    var fallbackTimer = null;
+
+    form.addEventListener('submit', function () {
+      errorMsg.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Joining…';
+      submitted = true;
+
+      // Safety net in case the iframe load event never fires
+      fallbackTimer = setTimeout(showThankYou, 4000);
+    });
+
+    iframe.addEventListener('load', function () {
+      if (!submitted) return; // ignore the initial blank load
+      clearTimeout(fallbackTimer);
+      showThankYou();
+    });
+
+    function showThankYou() {
+      document.getElementById('signup').style.display = 'none';
+      document.getElementById('thankyou').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>

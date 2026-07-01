@@ -1,11 +1,12 @@
 # heel. waitlist landing page
 
-A single static page (`index.html`) collecting waitlist emails, styled to match
-the existing heel. brand (sage green, Cormorant Garamond italic headlines,
-Inter body, the heel. logo). Submissions are relayed by a small Google Apps
-Script to a dedicated "Heel Waitlist" Notion database — kept fully separate
-from any other contact lists (Master Contacts, retreat/growth accelerator
-contacts, etc.).
+A static waitlist page at `www.liveheel.com/waitlist`, styled to match the
+existing heel. brand (sage green, Cormorant Garamond italic headlines, Inter
+body, the heel. logo). The root domain (`www.liveheel.com`) redirects to
+`/waitlist` for now, since the Shopify store is being wound down and there's
+nothing else there. Submissions are relayed by a small Google Apps Script to
+a dedicated "Heel Waitlist" Notion database — kept fully separate from any
+other contact lists (Master Contacts, retreat/growth accelerator contacts, etc.).
 
 No paid services and no new accounts beyond ones you already have (GitHub,
 Google, Notion).
@@ -13,10 +14,10 @@ Google, Notion).
 ## 1. Set up the Google Apps Script relay
 
 This keeps your Notion API token out of the public page — GitHub Pages can
-only serve static files, so the token can never live in `index.html` itself.
+only serve static files, so the token can never live in the HTML itself.
 
 1. Go to https://script.google.com → **New project**.
-2. Delete the placeholder code and paste in the contents of `apps-script.gs`.
+2. Delete the placeholder code and paste in the contents of `waitlist/apps-script.gs`.
 3. Click the gear icon (**Project Settings**) → **Script Properties** → **Add script property**, and add:
    - `NOTION_TOKEN` → your Notion integration token
    - `NOTION_DATABASE_ID` → the Heel Waitlist database ID (see step 2 below)
@@ -25,8 +26,8 @@ only serve static files, so the token can never live in `index.html` itself.
    - Who has access: **Anyone**
 5. Click **Deploy**, authorize the permissions prompt, and copy the resulting
    `.../exec` URL.
-6. Open `index.html` and replace `PASTE_YOUR_APPS_SCRIPT_URL_HERE` in the
-   `<form action="...">` line with that URL.
+6. Open `waitlist/index.html` and replace `PASTE_YOUR_APPS_SCRIPT_URL_HERE` in
+   the `<form action="...">` line with that URL.
 
 ## 2. Notion database
 
@@ -37,47 +38,37 @@ to paste into the Apps Script property above.
 
 ## 3. Deploy to GitHub Pages
 
-```bash
-cd heel-waitlist
-git init
-git add .
-git commit -m "Heel waitlist landing page"
-git branch -M main
-git remote add origin <your-new-empty-github-repo-url>
-git push -u origin main
-```
+Already pushed to `github.com/thesarahlea/heel-waitlist`. Once the repo is
+public, enable it under **Settings → Pages → Source: Deploy from branch →
+master / (root)**.
 
-Then on GitHub: **Settings → Pages → Source: Deploy from branch → main / (root)**.
-Your page will be live at `https://<username>.github.io/<repo>/` within a
-minute or two.
+## 4. Point www.liveheel.com at it
 
-## 4. Point liveheel.com at it (optional)
+A `CNAME` file at the repo root already contains `www.liveheel.com`, telling
+GitHub Pages to serve this whole repo at that domain (so `/waitlist` becomes
+`www.liveheel.com/waitlist`).
 
-Since you still own the domain even though Shopify is closing:
+At wherever `liveheel.com`'s DNS is managed (still to be confirmed — check
+your domain registrar; it may currently be Shopify Domains), add:
 
-1. In the repo, create a file named `CNAME` (no extension) containing just:
-   ```
-   liveheel.com
-   ```
-   (or `www.liveheel.com` if you'd rather use the www subdomain)
-2. In GitHub → **Settings → Pages**, enter the same domain under **Custom domain**.
-3. At wherever `liveheel.com`'s DNS is managed (check your domain registrar —
-   this may still be Shopify Domains, or elsewhere if you moved it), add:
-   - For the apex domain (`liveheel.com`): four **A records** pointing to
-     GitHub Pages' IPs:
-     ```
-     185.199.108.153
-     185.199.109.153
-     185.199.110.153
-     185.199.111.153
-     ```
-   - For `www.liveheel.com`: a **CNAME record** pointing to
-     `<username>.github.io`
-4. Back in GitHub Pages settings, tick **Enforce HTTPS** once DNS has
-   propagated (can take up to a few hours).
+- A **CNAME record** for `www` → `thesarahlea.github.io`
+- Optionally, for the bare apex (`liveheel.com` with no `www`), four **A
+  records** pointing to GitHub Pages' IPs:
+  ```
+  185.199.108.153
+  185.199.109.153
+  185.199.110.153
+  185.199.111.153
+  ```
+
+Then in GitHub → **Settings → Pages**, enter `www.liveheel.com` under
+**Custom domain**, and tick **Enforce HTTPS** once DNS has propagated (can
+take up to a few hours).
 
 ## Files
 
-- `index.html` — the landing page (signup + inline thank-you state, no page reload)
-- `apps-script.gs` — paste into script.google.com; relays email → Notion
-- `assets/heel-logo-white.png`, `assets/heel-dog-transparent.png` — brand assets
+- `index.html` — redirects root domain to `/waitlist`
+- `waitlist/index.html` — the actual signup page (signup + inline thank-you state, no page reload)
+- `waitlist/apps-script.gs` — paste into script.google.com; relays email → Notion
+- `waitlist/assets/` — brand logo + dog illustration
+- `CNAME` — tells GitHub Pages to serve this repo at www.liveheel.com
